@@ -1,0 +1,6 @@
+#!/home/marcin/Dokumente/PY/TransistorSizingTool/tst_venv/bin/python3
+import sys
+from psf_utils.show import show_signals
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+    sys.exit(show_signals())

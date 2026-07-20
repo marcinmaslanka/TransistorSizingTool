@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Transistor Sizing Tool</title>
+</head>
+
+<body>
+
+<h1>Transistor Sizing Tool</h1>
+
+<hr>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <div style="display:flex; gap:40px; align-items:flex-start;"></div>
+
+        <h2>Circuit Type</h2>
+
+        <input type="radio" id="common_source" name="circuit_type" value="common_source" checked>
+
+        <label for="common_source">Common Source Amplifier</label>
+
+    </div>
+
+    <hr>
+
+    <div style="display:flex; gap:40px; align-items:flex-start;">
+
+        <!-- Design Specification -->
+        <div>
+
+            <h2>Design Specification</h2>
+
+            <table border="1" cellpadding="6" cellspacing="0">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                    <th>Unit</th>
+                </tr>
+
+                <tr>
+                    <td>Supply Voltage (Vdd)</td>
+                    <td>{{ formular.vdd }}</td>
+                    <td>V</td>
+                </tr>
+
+                <tr>
+                    <td>Load Capacitance (CL)</td>
+                    <td>{{ formular.CL }}</td>
+                    <td>F</td>
+                </tr>
+
+                <tr>
+                    <td>Input Resistance (RS)</td>
+                    <td>{{ formular.RS }}</td>
+                    <td>Ω</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <!-- Design Choices -->
+        <div>
+
+            <h2>Design Choices</h2>
+
+            <table border="1" cellpadding="6" cellspacing="0">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                    <th>Unit</th>
+                </tr>
+
+                <tr>
+                    <td>gm/Id</td>
+                    <td>{{ formular.gm_id_spec }}</td>
+                    <td>S/A</td>
+                </tr>
+
+                <tr>
+                    <td>RD</td>
+                    <td>{{ formular.RD_spec }}</td>
+                    <td>Ω</td>
+                </tr>
+
+                <tr>
+                    <td>Channel Length</td>
+                    <td>{{ formular.L_spec }}</td>
+                    <td>µm</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <button type="submit" name="action" value="calculate">Calculate</button>
+
+</form>
+
+<hr>
+
+<h2>Design Space</h2>
+
+    {{ graph1|safe }}
+
+<hr>
+
+<h2>Selected Design Point</h2>
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th>Parameter</th>
+        <th>Value</th>
+        <th>Unit</th>
+    </tr>
+
+    <tr>
+        <td>Id</td>
+        <td><span id="Id-value">-</span></td>
+        <td>µA</td>
+    </tr>
+
+    <tr>
+        <td>L</td>
+        <td><span id="length-value">-</span></td>
+        <td>µm</td>
+    </tr>
+
+    <tr>
+        <td>W</td>
+        <td><span id="width-value">-</span></td>
+        <td>µm</td>
+    </tr>
+
+    <tr>
+        <td>RL</td>
+        <td><span id="RL-value">-</span></td>
+        <td>Ω</td>
+    </tr>
+
+    <tr>
+        <td>DC Gain |Av0|</td>
+        <td><span id="av0-value">-</span></td>
+        <td>V/V</td>
+    </tr>
+
+    <tr>
+        <td>Bandwidth BW</td>
+        <td><span id="bw-value">-</span></td>
+        <td>MHz</td>
+    </tr>
+</table>
+
+<hr>
+
+<h2>Detailed Plots</h2>
+
+<div style="display:flex; gap:20px;">
+
+    <div style="width:50%;">
+        {{ graph7|safe }}
+    </div>
+
+    <div style="width:50%;">
+        {{ graph2|safe }}
+    </div>
+
+</div>
+
+<div style="display:flex; gap:20px;">
+
+    <div style="width:50%;">
+        {{ graph4|safe }}
+    </div>
+
+    <div style="width:50%;">
+        {{ graph3|safe }}
+    </div>
+
+</div>
+
+<div style="display:flex; gap:20px;">
+
+    <div style="width:50%;">
+        {{ graph5|safe }}
+    </div>
+
+</div>
+
+<hr>
+
+<script>
+
+var plot = document.getElementsByClassName('plotly-graph-div')[0];
+
+plot.on('plotly_click', function(data){
+
+    var point = data.points[0];
+
+    var L = point.customdata[1];
+    var W = point.customdata[2];
+    var RL = point.customdata[3];
+    var Id = point.customdata[4];
+    var av0 = point.customdata[5];
+    var bw = point.customdata[6];
+
+    // anzeigen
+    document.getElementById("length-value").innerHTML =
+        (L);
+    document.getElementById("width-value").innerHTML =
+        (W).toFixed(2);
+    document.getElementById("RL-value").innerHTML =
+        (RL).toFixed(2);
+    document.getElementById("Id-value").innerHTML =
+        (Id).toFixed(2);
+    document.getElementById("av0-value").innerHTML =
+        (av0).toFixed(2);
+    document.getElementById("bw-value").innerHTML =
+        (bw).toFixed(2);
+    
+
+});
+
+</script>
+
+
+</body>
+</html>

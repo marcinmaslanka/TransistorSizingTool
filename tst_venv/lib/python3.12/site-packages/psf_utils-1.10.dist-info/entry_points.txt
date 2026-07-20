@@ -1,0 +1,4 @@
+[console_scripts]
+list-psf=psf_utils.list:list_signals
+show-psf=psf_utils.show:show_signals
+
