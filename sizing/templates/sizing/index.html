@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -15,13 +16,25 @@
 
     {% csrf_token %}
 
-    <div style="display:flex; gap:40px; align-items:flex-start;"></div>
+    <div style="display:flex; gap:40px; align-items:flex-start;">
 
-        <h2>Circuit Type</h2>
+        <div style="flex:1;">
+            <h2>Circuit Type</h2>
 
-        <input type="radio" id="common_source" name="circuit_type" value="common_source" checked>
+            <input type="radio" id="common_source" name="circuit_type" value="common_source" checked>
 
-        <label for="common_source">Common Source Amplifier</label>
+            <label for="common_source">Common Source Amplifier</label>
+        </div>
+
+        <div style="flex:1;">
+            <h2>Schematic</h2>
+
+            <img src="{% static 'images/common_source.png' %}"
+            alt="Common Source Amplifier"
+            style="width:50%; height:auto;">
+
+        </div>
+        
 
     </div>
 
@@ -29,9 +42,7 @@
 
     <div style="display:flex; gap:40px; align-items:flex-start;">
 
-        <!-- Design Specification -->
-        <div>
-
+        <div style="flex:1;">
             <h2>Design Specification</h2>
 
             <table border="1" cellpadding="6" cellspacing="0">
@@ -63,9 +74,7 @@
 
         </div>
 
-        <!-- Design Choices -->
-        <div>
-
+        <div style="flex:1;">
             <h2>Design Choices</h2>
 
             <table border="1" cellpadding="6" cellspacing="0">
@@ -191,6 +200,10 @@
 
     <div style="width:50%;">
         {{ graph5|safe }}
+    </div>
+
+    <div style="width:50%;">
+        {{ graph6|safe }}
     </div>
 
 </div>

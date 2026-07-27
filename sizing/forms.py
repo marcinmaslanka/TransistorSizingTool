@@ -3,8 +3,17 @@ from django import forms
 
 class Formular(forms.Form):
 
+    """
+    The form collects the parameters required for gm/Id-based transistor
+    sizing. Fixed circuit specifications (Vdd and RS) are displayed as
+    read-only fields, while design parameters such as load capacitance,
+    target gm/Id, channel length, and drain resistance can be configured
+    by the user.
+
+    """
+
     vdd = forms.FloatField(label="Supply Voltage (V)",
-                           initial=1.2,
+                           initial=1.21,
                            disabled=True,
                            )
 
@@ -34,6 +43,11 @@ class Formular(forms.Form):
     L_spec = forms.ChoiceField(label="Channel Length")
 
     def __init__(self, *args, lengths=None, **kwargs):
+
+        """Available channel lengths are populated dynamically during form
+        initialization.
+        
+        """
         
         super().__init__(*args, **kwargs)
 

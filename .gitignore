@@ -9,13 +9,15 @@ venv/
 .venv/
 
 # Django
-db.sqlite3
-
-# Static Files (werden auf Render erzeugt)
+*.sqlite3
 staticfiles/
 
 # Logs
 *.log
+
+# Profiling
+*.lprof
+*.prof
 
 # IDEs
 .vscode/
@@ -36,7 +38,5 @@ dist/
 *.egg-info/
 
 # pytest
+.coverage
 .pytest_cache/
-
-# mypy
-.mypy_cache/
