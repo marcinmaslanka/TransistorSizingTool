@@ -13,14 +13,4 @@ Follow these steps to size a transistor using the web application:
 
 5. Read the calculated transistor parameters (**W**, **L**, and **ID**) from the results table.
 
-### Step 1: Enter Design Specifications
 
-docs/images/input_parameters.png
-
-### Step 2: Select a Design Point
-
-docs/images/design_space.png
-
-### Step 3: Review Calculated Dimensions
-
-docs/images/results.png
